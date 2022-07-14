@@ -1,4 +1,6 @@
-# text input
+# `<TextInput />`
+
+[docs](https://reactnative.dev/docs/textinput)
 
 Use the `<TextInput>` component to capture keyboard input
 
