@@ -1,7 +1,14 @@
 import { useState } from 'react';
-import { StyleSheet, FlatList, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  Text,
+  View,
+  TouchableOpacity,
+  Button,
+} from 'react-native';
 
-const list = [
+const initPeople = [
   { id: 1, name: 'Robert' },
   { id: 2, name: 'Bob' },
   { id: 3, name: 'Rob' },
@@ -13,24 +20,34 @@ const list = [
 ];
 
 export default function App() {
-  const [people, setPeople] = useState(list);
+  const [people, setPeople] = useState(initPeople);
+
+  const pressHandler = (id: number) => {
+    deleteItem(id);
+  };
+
+  const deleteItem = (id: number) => {
+    setPeople((prevPeople) => prevPeople.filter((person) => person.id !== id));
+  };
 
   return (
     <View style={styles.container}>
-      <FlatList
-        numColumns={2}
-        data={list}
-        renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
-        // keyExtractor={(item) => item.name } not needed if items have an id or key property
-      />
-
-      {/* <ScrollView>
-        {people.map((item) => (
-          <View key={item.id}>
-            <Text style={styles.item}>{item.name}</Text>
-          </View>
-        ))}
-      </ScrollView> */}
+      {people.length ? (
+        <FlatList
+          numColumns={2}
+          data={people}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => pressHandler(item.id)}>
+              <Text style={styles.item}>{item.name}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      ) : (
+        <Button
+          title='reload list'
+          onPress={() => setPeople(() => initPeople)}
+        />
+      )}
     </View>
   );
 }
