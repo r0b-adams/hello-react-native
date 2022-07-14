@@ -1,24 +1,30 @@
 import { useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function App() {
   const [name, setName] = useState('bob');
+  const [age, setAge] = useState('999');
 
-  const toggleName = () => {
-    name === 'bob' ? setName(() => 'robert') : setName(() => 'bob');
-  };
+  const handleNameChange = (text: string) => setName(() => text);
+
+  const handleAgeChange = (text: string) => setAge(() => text);
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.boldText}>Hello, World!</Text>
-      </View>
-      <View style={styles.body}>
-        <Text>Hi! my name is {name}!</Text>
-      </View>
-      <View style={styles.button}>
-        <Button title='toggle name' onPress={toggleName} />
-      </View>
+      <TextInput
+        style={styles.input}
+        multiline
+        placeholder='Please enter a name...'
+        onChangeText={handleNameChange}
+      />
+      <Text> name: {name}</Text>
+      <TextInput
+        style={styles.input}
+        keyboardType='numeric'
+        placeholder='Please enter an age...'
+        onChangeText={handleAgeChange}
+      />
+      <Text> age: {age}</Text>
     </View>
   );
 }
@@ -30,19 +36,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  header: {
-    backgroundColor: 'salmon',
-    padding: 20,
-  },
-  boldText: {
-    fontWeight: 'bold',
-  },
-  body: {
-    backgroundColor: 'chartreuse',
-    padding: 20,
-  },
-  button: {
-    borderRadius: 5,
-    color: 'red',
+  input: {
+    borderWidth: 1,
+    borderColor: '#777',
+    padding: 8,
+    margin: 10,
+    width: 200,
   },
 });
